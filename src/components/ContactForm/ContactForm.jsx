@@ -1,18 +1,84 @@
- import React from 'react'
+ import React, { useState } from 'react'
  import styles from './ContactForm.module.css'
+ import { MdMessage } from "react-icons/md";
+ import { IoCallSharp } from "react-icons/io5";
+ import { IoIosMail } from "react-icons/io";
+import Button from '../Button/Button'
  
  const ContactForm = () => {
+
+  const [name, setName] = useState('');
+  const [email, setEmail] = useState('');
+  const [text, setText] = useState('');
+
+   const onSubmit=(e)=>{
+    e.preventDefault();
+    let nameVal = e.target[0].value;
+    let emailVal = e.target[1].value;
+    let textVal = e.target[2].value;
+
+    setName(nameVal);
+    setEmail(emailVal);
+    setText(textVal);
+
+    console.log("name: ", e.target[0].value);
+    console.log("email: ", e.target[1].value);
+    console.log("text: ", e.target[2].value);
+    }
+
    return (
-     <section className='{styles.container}'>
 
-       <div className='{styles.contact_form}'>
+     <section className={styles.container}>
 
+       <div className={styles.contact_form}>
+        <div className={styles.top_btn}>
+          <Button
+        text="VIA SUPPORT CHAT"
+        icon={<MdMessage />}
+        />
+        <Button
+        text="VIA CALL"
+        icon={<IoCallSharp />}
+        />
+        </div>
+        <Button
+        isOutline = {true}
+        text="VIA EMAIL FORM"
+        icon={<IoIosMail />}
+        />
+
+        <form onSubmit={onSubmit}>
+          <div className= {styles.form_control}>
+            <label htmlFor='name'>Name</label>
+          <input type='text' placeholder='Enter name ..'></input>
+          </div>
+           <div className={styles.form_control}>
+            <label htmlFor="email">Email</label>
+            <input type="email" placeholder='Ex: JohnDoe74@gmail.com'/>
+          </div>
+           <div className={styles.form_control}>
+            <label htmlFor="text">Text</label>
+            <textarea name="text" rows="8" placeholder='Write something...'/>
+          </div>
+          <div style={
+            {display:"flex",
+            justifyContent: "end",}
+          }>
+            <Button text="SUBMIT"/>
+          </div>
+          <div>
+            <strong>Submitted Values:</strong><br />
+            Name:  {name}<br/>
+            Email:  {email}<br/>
+            Text:  {text}
+          </div>
+        </form>
        </div>
 
        <div className='{styles.contact_image}'>
         <img src="./public/images/contact.svg" alt="image" />
        </div>
-
+  
      </section>
    )
  }
